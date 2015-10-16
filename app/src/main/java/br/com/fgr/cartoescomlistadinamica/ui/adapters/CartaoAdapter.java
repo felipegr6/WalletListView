@@ -78,6 +78,20 @@ public class CartaoAdapter extends BaseAdapter implements Swappable {
     @Override
     public void swapItems(int positionOne, int positionTwo) {
 
+        Cartao temp = getItem(positionOne);
+
+        set(positionOne, getItem(positionTwo));
+        set(positionTwo, temp);
+
+    }
+
+    private void set(final int location, final Cartao object) {
+
+        cartaoList.remove(object);
+        cartaoList.add(location, object);
+
+        notifyDataSetChanged();
+
     }
 
     class CartaoHolder {
