@@ -26,4 +26,13 @@ public class Cartao {
         return tipoCartao;
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        Cartao another = (Cartao) o;
+
+        return this.nome.equals(another.getNome()) && this.numero.equals(another.getNumero());
+
+    }
+
 }

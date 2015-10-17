@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nhaarman.listviewanimations.util.Swappable;
@@ -50,26 +49,23 @@ public class CartaoAdapter extends BaseAdapter implements Swappable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        CartaoHolder holder;
-
         if (convertView == null) {
 
             Cartao cartao = cartaoList.get(position);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_cartao_adapter, null);
-            holder = new CartaoHolder();
 
-            holder.textNome = (TextView) convertView.findViewById(R.id.nome);
-            holder.textNumero = (TextView) convertView.findViewById(R.id.numero);
-            holder.imgCartao = (RelativeLayout) convertView.findViewById(R.id.rl_cartao);
+            TextView textNome = (TextView) convertView.findViewById(R.id.nome);
+            TextView textNumero = (TextView) convertView.findViewById(R.id.numero);
+            View imgCartao = convertView.findViewById(R.id.rl_cartao);
 
-            holder.textNome.setText(cartao.getNome());
-            holder.textNumero.setText(cartao.getNumero());
-            holder.imgCartao.setBackgroundResource(cartao.getTipoCartao().getTipoCartao());
+            textNome.setText(cartao.getNome());
+            textNumero.setText(cartao.getNumero());
+            imgCartao.setBackgroundResource(cartao.getTipoCartao().getTipoCartao());
 
-            convertView.setTag(holder);
+            if(position == 0)
+                convertView.findViewById(R.id.view_sombra).setVisibility(View.GONE);
 
-        } else
-            holder = (CartaoHolder) convertView.getTag();
+        }
 
         return convertView;
 
@@ -91,14 +87,6 @@ public class CartaoAdapter extends BaseAdapter implements Swappable {
         cartaoList.add(location, object);
 
         notifyDataSetChanged();
-
-    }
-
-    class CartaoHolder {
-
-        private TextView textNome;
-        private TextView textNumero;
-        private RelativeLayout imgCartao;
 
     }
 
