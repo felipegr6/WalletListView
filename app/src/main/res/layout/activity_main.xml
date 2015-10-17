@@ -9,15 +9,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/rl_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/rl_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
 
     <!--<com.nhaarman.listviewanimations.itemmanipulation.DynamicListView-->
-        <!--android:id="@+id/dynamiclistview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:divider="@null" />-->
+    <!--android:id="@+id/dynamiclistview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:divider="@null" />-->
+
+    <br.com.fgr.cartoescomlistadinamica.ui.custom_views.CustomDinamicListView
+        android:id="@+id/custom_dynamic_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null" />
 
 </RelativeLayout>

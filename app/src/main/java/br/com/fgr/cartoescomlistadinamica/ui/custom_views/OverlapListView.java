@@ -2,15 +2,19 @@ package br.com.fgr.cartoescomlistadinamica.ui.custom_views;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 
-public class OverlapListView {
+public class OverlapListView extends AbsListView {
 
     private Context context;
     private RelativeLayout relativeLayout;
 
     public OverlapListView(Context context, RelativeLayout relativeLayout) {
+
+        super(context);
 
         this.context = context;
         this.relativeLayout = relativeLayout;
@@ -33,6 +37,16 @@ public class OverlapListView {
             relativeLayout.addView(v, lp);
 
         }
+
+    }
+
+    @Override
+    public ListAdapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void setSelection(int position) {
 
     }
 

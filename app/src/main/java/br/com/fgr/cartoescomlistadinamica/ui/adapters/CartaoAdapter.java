@@ -62,7 +62,7 @@ public class CartaoAdapter extends BaseAdapter implements Swappable {
             textNumero.setText(cartao.getNumero());
             imgCartao.setBackgroundResource(cartao.getTipoCartao().getTipoCartao());
 
-            if(position == 0)
+            if (position == 0)
                 convertView.findViewById(R.id.view_sombra).setVisibility(View.GONE);
 
         }
