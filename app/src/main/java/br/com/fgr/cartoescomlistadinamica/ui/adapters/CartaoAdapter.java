@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.nhaarman.listviewanimations.util.Swappable;
 
@@ -49,23 +48,22 @@ public class CartaoAdapter extends BaseAdapter implements Swappable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Cartao cartao = cartaoList.get(position);
+        CartaoHolder holder;
+
         if (convertView == null) {
 
-            Cartao cartao = cartaoList.get(position);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_cartao_adapter, null);
+            holder = new CartaoHolder(convertView);
 
-            TextView textNome = (TextView) convertView.findViewById(R.id.nome);
-            TextView textNumero = (TextView) convertView.findViewById(R.id.numero);
-            View imgCartao = convertView.findViewById(R.id.rl_cartao);
+            convertView.setTag(holder);
 
-            textNome.setText(cartao.getNome());
-            textNumero.setText(cartao.getNumero());
-            imgCartao.setBackgroundResource(cartao.getTipoCartao().getTipoCartao());
+        } else
+            holder = (CartaoHolder) convertView.getTag();
 
-            if (position == 0)
-                convertView.findViewById(R.id.view_sombra).setVisibility(View.GONE);
-
-        }
+        holder.getTextNome().setText(cartao.getNome());
+        holder.getTextNumero().setText(cartao.getNumero());
+        holder.getImgCartao().setBackgroundResource(cartao.getTipoCartao().getTipoCartao());
 
         return convertView;
 
@@ -81,10 +79,18 @@ public class CartaoAdapter extends BaseAdapter implements Swappable {
 
     }
 
-    private void set(final int location, final Cartao object) {
+    private void set(int location, Cartao object) {
 
         cartaoList.remove(object);
         cartaoList.add(location, object);
+
+        notifyDataSetChanged();
+
+    }
+
+    public void remove(int position) {
+
+        cartaoList.remove(position);
 
         notifyDataSetChanged();
 
