@@ -42,7 +42,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
     float lastXTouch;
     float lastYTouch;
     float deltaXTouch;
-    float originalX;
+    //    float originalX;
     boolean jaPegou = false;
 
     boolean isDraggingInOnLongClick = false;
@@ -92,10 +92,10 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 pos2.getLayoutParams().height = height;
                 pos3.getLayoutParams().height = height;
 
-                if (!jaPegou) {
-                    originalX = cartao1.getX();
-                    jaPegou = true;
-                }
+//                if (!jaPegou) {
+//                    originalX = cartao1.getX();
+//                    jaPegou = true;
+//                }
 
             }
 
@@ -196,7 +196,8 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 lastXTouch = event.getX();
                 lastYTouch = event.getY();
 
-                v.setX(originalX);
+                v.setX(0);
+                v.setY(0);
 
                 return false;
 
@@ -205,6 +206,9 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 v.setX(lastXTouch);
                 v.setY(lastYTouch);
                 isDraggingInTouch = false;
+
+                v.setX(0);
+                v.setY(0);
 
                 return false;
 
