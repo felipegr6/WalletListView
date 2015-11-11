@@ -17,7 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class Main3Activity extends AppCompatActivity implements View.OnTouchListener,
-        View.OnDragListener, View.OnLongClickListener {
+        View.OnDragListener, View.OnLongClickListener, View.OnClickListener {
 
     private int height;
     private Drawable enterShape;
@@ -68,6 +68,10 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
         cartao1.setOnLongClickListener(this);
         cartao2.setOnLongClickListener(this);
         cartao3.setOnLongClickListener(this);
+
+        cartao1.setOnClickListener(this);
+        cartao2.setOnClickListener(this);
+        cartao3.setOnClickListener(this);
 
         enterShape = getResources().getDrawable(R.drawable.bg_over);
         normalShape = getResources().getDrawable(R.drawable.bg);
@@ -230,6 +234,39 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
         v.setVisibility(View.INVISIBLE);
 
         return true;
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
+
+        int viewIndex = Integer.parseInt(((String) v.getTag()).split("_")[1]);
+        View parentBelow = root.findViewWithTag("box_" + (viewIndex + 1));
+
+        while (viewIndex <= 3) {
+
+            if (parentBelow != null) {
+
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
+                params.topMargin = params.topMargin + 100;
+                parentBelow.setLayoutParams(params);
+
+            }
+
+            viewIndex++;
+            parentBelow = root.findViewWithTag("box_" + (viewIndex + 1));
+
+        }
+
+//        if (parentBelow != null) {
+//
+//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
+//            params.topMargin = params.topMargin + 100;
+//            parentBelow.setLayoutParams(params);
+//
+//        }
 
     }
 
