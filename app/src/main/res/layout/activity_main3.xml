@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cartao_ta_linhas"
-                    android:tag="view_1" />
+                    android:tag="view_1_close" />
 
             </RelativeLayout>
 
@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cartao_tr_linhas"
-                    android:tag="view_2" />
+                    android:tag="view_2_close" />
 
             </RelativeLayout>
 
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cartao_tr_linhas"
-                    android:tag="view_3" />
+                    android:tag="view_3_open" />
 
             </RelativeLayout>
 

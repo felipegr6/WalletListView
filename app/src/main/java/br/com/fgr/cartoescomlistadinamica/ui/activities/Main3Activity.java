@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 public class Main3Activity extends AppCompatActivity implements View.OnTouchListener,
         View.OnDragListener, View.OnLongClickListener, View.OnClickListener {
 
+    private final int TAM_LIST = 3;
+
     private int height;
     private Drawable enterShape;
     private Drawable normalShape;
@@ -42,13 +44,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
     float lastXTouch;
     float lastYTouch;
     float deltaXTouch;
-    //    float originalX;
-    boolean jaPegou = false;
-
-    boolean isDraggingInOnLongClick = false;
-    float lastXTouchOnLongClick;
-    float lastYTouchOnLongClick;
-    float deltaYTouchOnLongClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +91,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 pos2.getLayoutParams().height = height;
                 pos3.getLayoutParams().height = height;
 
-//                if (!jaPegou) {
-//                    originalX = cartao1.getX();
-//                    jaPegou = true;
-//                }
-
             }
 
         });
@@ -124,10 +114,13 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 // Ao fazer o drop
                 View view = (View) event.getLocalState();
                 ViewGroup owner = (ViewGroup) view.getParent();
+                String tagsChild[] = ((String) view.getTag()).split("_");
                 owner.removeView(view);
                 RelativeLayout container = (RelativeLayout) v;
                 container.addView(view);
+                String tagsOwner[] = ((String) container.getTag()).split("_");
                 view.setVisibility(View.VISIBLE);
+                view.setTag(tagsChild[0] + "_" + tagsOwner[1] + "_" + tagsChild[2]);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 // Ao terminar de arrastar
@@ -145,36 +138,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
-//        int action = event.getAction();
-
-        /*switch (action) {
-
-            case MotionEvent.ACTION_DOWN: {
-
-                ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-
-                v.startDrag(data, shadowBuilder, v, 0);
-                v.setVisibility(View.INVISIBLE);
-
-                return true;
-
-            }
-
-            case MotionEvent.ACTION_MOVE: {
-
-                v.setX(event.getX());
-                Log.w("x", event.getX() + "");
-                Log.w("y", event.getY() + "");
-                return true;
-
-            }
-
-            default:
-                return false;
-
-        }*/
 
         int action = event.getAction();
 
@@ -241,16 +204,27 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
     public void onClick(View v) {
 
         ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
-
-        int viewIndex = Integer.parseInt(((String) v.getTag()).split("_")[1]);
+        String tags[] = ((String) v.getTag()).split("_");
+        int viewIndex = Integer.parseInt(tags[1]);
+        String status = tags[2];
         View parentBelow = root.findViewWithTag("box_" + (viewIndex + 1));
 
         while (viewIndex <= 3) {
 
             if (parentBelow != null) {
 
+                int height = cartao1.getHeight();
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
-                params.topMargin = params.topMargin + 100;
+
+                if (viewIndex != TAM_LIST) {
+
+                    if (status.equals("close"))
+                        params.topMargin = params.topMargin + height;
+                    else
+                        params.topMargin = params.topMargin - height;
+
+                }
+
                 parentBelow.setLayoutParams(params);
 
             }
@@ -260,13 +234,10 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
 
         }
 
-//        if (parentBelow != null) {
-//
-//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
-//            params.topMargin = params.topMargin + 100;
-//            parentBelow.setLayoutParams(params);
-//
-//        }
+        if (status.equals("close"))
+            v.setTag(tags[0] + "_" + tags[1] + "_open");
+        else
+            v.setTag(tags[0] + "_" + tags[1] + "_close");
 
     }
 
