@@ -1,9 +1,12 @@
 package br.com.fgr.cartoescomlistadinamica.ui.activities;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +47,8 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
     float lastXTouch;
     float lastYTouch;
     float deltaXTouch;
+
+    private boolean isAppear = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +165,31 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
 
                 v.setX(v.getX() + event.getX() - deltaXTouch);
                 v.setY(v.getY());
+
+                Log.e("getX", String.valueOf(v.getX()));
+
+                if (v.getX() < -500 && !isAppear) {
+
+                    isAppear = true;
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("Alguma coisa aqui.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    isAppear = false;
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    isAppear = false;
+                                }
+                            });
+
+                    builder.create().show();
+
+                }
 
                 return false;
 
