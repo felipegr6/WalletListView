@@ -114,18 +114,19 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 // Ao fazer o drop
                 View view = (View) event.getLocalState();
                 ViewGroup owner = (ViewGroup) view.getParent();
-                String tagsChild[] = ((String) view.getTag()).split("_");
-                owner.removeView(view);
                 RelativeLayout container = (RelativeLayout) v;
-                container.addView(view);
-                String tagsOwner[] = ((String) container.getTag()).split("_");
+                View viewTo = container.getChildAt(0);
+
+                if (!owner.getTag().equals(container.getTag())) {
+
+                    owner.removeView(view);
+                    container.removeView(viewTo);
+                    owner.addView(viewTo);
+                    container.addView(view);
+
+                }
+
                 view.setVisibility(View.VISIBLE);
-
-//                if (tagsOwner[1].equals(TAM_LIST + ""))
-//                    view.setTag(tagsChild[0] + "_" + tagsOwner[1] + "_last");
-//                else
-//                    view.setTag(tagsChild[0] + "_" + tagsOwner[1] + "_" + tagsChild[2]);
-
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 // Ao terminar de arrastar
