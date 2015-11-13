@@ -222,7 +222,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
 
             if (parentBelow != null) {
 
-                int height = cartao1.getHeight();
+                int height = 5 * cartao1.getHeight() / 8;
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
                 switch (status) {
