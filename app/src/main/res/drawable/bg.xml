@@ -5,15 +5,17 @@
         <!--android:width="2dp"-->
         <!--android:color="#FFFFFFFF" />-->
 
-    <!--<gradient-->
-        <!--android:angle="225"-->
-        <!--android:endColor="#DD2ECCFA"-->
-        <!--android:startColor="#DD000000" />-->
+    <solid android:color="#00FFFFFF" />
 
-    <!--<corners-->
-        <!--android:bottomLeftRadius="7dp"-->
-        <!--android:bottomRightRadius="7dp"-->
-        <!--android:topLeftRadius="7dp"-->
-        <!--android:topRightRadius="7dp" />-->
+    <!--<gradient-->
+    <!--android:angle="225"-->
+    <!--android:endColor="#DD2ECCFA"-->
+    <!--android:startColor="#DD000000" />-->
+
+    <corners
+        android:bottomLeftRadius="7dp"
+        android:bottomRightRadius="7dp"
+        android:topLeftRadius="7dp"
+        android:topRightRadius="7dp" />
 
 </shape>
