@@ -20,7 +20,7 @@ android {
     }
 }
 
-def AndroidSupportVersion = '23.1.0'
+def AndroidSupportVersion = '23.1.1'
 check.dependsOn 'checkstyle'
 
 task checkstyle(type: Checkstyle){

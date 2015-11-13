@@ -120,7 +120,12 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 container.addView(view);
                 String tagsOwner[] = ((String) container.getTag()).split("_");
                 view.setVisibility(View.VISIBLE);
-                view.setTag(tagsChild[0] + "_" + tagsOwner[1] + "_" + tagsChild[2]);
+
+//                if (tagsOwner[1].equals(TAM_LIST + ""))
+//                    view.setTag(tagsChild[0] + "_" + tagsOwner[1] + "_last");
+//                else
+//                    view.setTag(tagsChild[0] + "_" + tagsOwner[1] + "_" + tagsChild[2]);
+
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 // Ao terminar de arrastar
@@ -204,24 +209,29 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
     public void onClick(View v) {
 
         ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
-        String tags[] = ((String) v.getTag()).split("_");
+        String tags[] = ((String) ((View) v.getParent()).getTag()).split("_");
         int viewIndex = Integer.parseInt(tags[1]);
         String status = tags[2];
-        View parentBelow = root.findViewWithTag("box_" + (viewIndex + 1));
 
         while (viewIndex <= 3) {
+
+            View parentBelow = root.findViewWithTag("box_" + (viewIndex + 1) + "_open") != null
+                    ? root.findViewWithTag("box_" + (viewIndex + 1) + "_open")
+                    : root.findViewWithTag("box_" + (viewIndex + 1) + "_close");
 
             if (parentBelow != null) {
 
                 int height = cartao1.getHeight();
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
-                if (viewIndex != TAM_LIST) {
+                switch (status) {
 
-                    if (status.equals("close"))
+                    case "close":
                         params.topMargin = params.topMargin + height;
-                    else
+                        break;
+                    case "open":
                         params.topMargin = params.topMargin - height;
+                        break;
 
                 }
 
@@ -230,14 +240,19 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
             }
 
             viewIndex++;
-            parentBelow = root.findViewWithTag("box_" + (viewIndex + 1));
 
         }
 
-        if (status.equals("close"))
-            v.setTag(tags[0] + "_" + tags[1] + "_open");
-        else
-            v.setTag(tags[0] + "_" + tags[1] + "_close");
+        switch (status) {
+
+            case "close":
+                ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_open");
+                break;
+            case "open":
+                ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_close");
+                break;
+
+        }
 
     }
 
