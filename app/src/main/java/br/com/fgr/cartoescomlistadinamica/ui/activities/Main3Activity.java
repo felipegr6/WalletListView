@@ -36,6 +36,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
     RelativeLayout pos2;
     @Bind(R.id.rl3)
     RelativeLayout pos3;
+
     @Bind(R.id.img1)
     ImageView cartao1;
     @Bind(R.id.img2)
@@ -122,7 +123,19 @@ public class Main3Activity extends AppCompatActivity implements View.OnTouchList
                 RelativeLayout container = (RelativeLayout) v;
                 View viewTo = container.getChildAt(0);
 
+                int indexFrom = Integer.parseInt(((String) view.getTag()).split("_")[1]);
+                int indexTo = Integer.parseInt(((String) viewTo.getTag()).split("_")[1]);
+
+                ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
+
                 if (!owner.getTag().equals(container.getTag())) {
+
+//                    while (indexFrom != indexTo) {
+//
+//                        root.findViewWithTag(String.format("view_%s", indexFrom));
+//
+//
+//                    }
 
                     owner.removeView(view);
                     container.removeView(viewTo);
