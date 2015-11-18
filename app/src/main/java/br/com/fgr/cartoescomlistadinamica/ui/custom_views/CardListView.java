@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
@@ -17,10 +18,11 @@ import java.util.List;
 
 import br.com.fgr.cartoescomlistadinamica.R;
 import br.com.fgr.cartoescomlistadinamica.model.AbstractCard;
+import br.com.fgr.cartoescomlistadinamica.ui.adapters.AbstractCardAdapter;
 import br.com.fgr.cartoescomlistadinamica.utils.GeneratorId;
 import br.com.fgr.cartoescomlistadinamica.utils.Measure;
 
-public class CardListView extends RelativeLayout implements View.OnTouchListener, View.OnDragListener,
+public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout implements View.OnTouchListener, View.OnDragListener,
         View.OnLongClickListener, View.OnClickListener {
 
     private int listSize;
@@ -39,6 +41,8 @@ public class CardListView extends RelativeLayout implements View.OnTouchListener
     float lastXTouch;
     float lastYTouch;
     float deltaXTouch;
+
+    private T baseAdapter;
 
     private boolean isAppear = false;
 
@@ -62,15 +66,18 @@ public class CardListView extends RelativeLayout implements View.OnTouchListener
 
     }
 
-    public void setItems(List<AbstractCard> cardList, SideDraggable draggable) {
+    public void setAdapter(@NonNull T baseAdapter) {
 
-        this.draggable = draggable;
-
+        this.baseAdapter = baseAdapter;
         relativeLayouts = new ArrayList<>();
-        listSize = cardList.size();
+//        listSize = cardList.size();
 
         inflateViews(listSize);
 
+    }
+
+    public void setSideDraggable(@NonNull SideDraggable draggable) {
+        this.draggable = draggable;
     }
 
     private void reorderList(int oldPos, int newPos) {
@@ -109,11 +116,13 @@ public class CardListView extends RelativeLayout implements View.OnTouchListener
             else
                 rl.setId(GeneratorId.generate());
 
-            card.getView().setOnTouchListener(this);
-            card.getView().setOnClickListener(this);
-            card.getView().setOnLongClickListener(this);
+            View cardView = baseAdapter.getView(i, null, this);
 
-            rl.addView(card.getView());
+            cardView.setOnTouchListener(this);
+            cardView.setOnClickListener(this);
+            cardView.setOnLongClickListener(this);
+
+            rl.addView(cardView);
             rl.setOnDragListener(this);
             addView(rl);
             relativeLayouts.add(rl);
@@ -138,7 +147,7 @@ public class CardListView extends RelativeLayout implements View.OnTouchListener
 
             if (parentBelow != null) {
 
-                int height = 5 * abstractCards.get(0).getView().getHeight() / 8;
+                int height = 5 * baseAdapter.getView(0, null, this).getHeight() / 8;
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
                 switch (status) {
