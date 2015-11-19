@@ -17,25 +17,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fgr.cartoescomlistadinamica.R;
-import br.com.fgr.cartoescomlistadinamica.model.AbstractCard;
 import br.com.fgr.cartoescomlistadinamica.ui.adapters.AbstractCardAdapter;
 import br.com.fgr.cartoescomlistadinamica.utils.GeneratorId;
 import br.com.fgr.cartoescomlistadinamica.utils.Measure;
 
-public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout implements View.OnTouchListener, View.OnDragListener,
-        View.OnLongClickListener, View.OnClickListener {
+public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout implements
+        View.OnTouchListener, View.OnDragListener, View.OnLongClickListener, View.OnClickListener {
 
-    private int listSize;
     private Context context;
 
-    private int height;
     private Drawable enterShape;
     private Drawable normalShape;
 
     private SideDraggable draggable;
 
     private List<RelativeLayout> relativeLayouts;
-    private List<AbstractCard> abstractCards;
 
     boolean isDraggingInTouch = false;
     float lastXTouch;
@@ -70,9 +66,8 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
         this.baseAdapter = baseAdapter;
         relativeLayouts = new ArrayList<>();
-//        listSize = cardList.size();
 
-        inflateViews(listSize);
+        inflateViews();
 
     }
 
@@ -83,20 +78,20 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
     private void reorderList(int oldPos, int newPos) {
 
         RelativeLayout rl = relativeLayouts.remove(oldPos);
-        AbstractCard card = abstractCards.remove(oldPos);
 
         relativeLayouts.add(newPos, rl);
-        abstractCards.add(newPos, card);
-
-        inflateViews(listSize);
+        inflateViews();
 
     }
 
-    private void inflateViews(int size) {
+    private void inflateViews() {
+
+        int size = baseAdapter.getCount();
+        relativeLayouts.clear();
+        removeAllViews();
 
         for (int i = 0; i < size; i++) {
 
-            AbstractCard card = abstractCards.get(i);
             RelativeLayout rl = new RelativeLayout(context);
             RelativeLayout.LayoutParams params = new RelativeLayout
                     .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -134,20 +129,19 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
     @Override
     public void onClick(View v) {
 
-        ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
         String tags[] = ((String) ((View) v.getParent()).getTag()).split("_");
         int viewIndex = Integer.parseInt(tags[1]);
         String status = tags[2];
 
-        while (viewIndex <= 3) {
+        while (viewIndex < baseAdapter.getCount()) {
 
-            View parentBelow = root.findViewWithTag("box_" + (viewIndex + 1) + "_open") != null
-                    ? root.findViewWithTag("box_" + (viewIndex + 1) + "_open")
-                    : root.findViewWithTag("box_" + (viewIndex + 1) + "_close");
+            View parentBelow = this.findViewWithTag("box_" + (viewIndex + 1) + "_open") != null
+                    ? this.findViewWithTag("box_" + (viewIndex + 1) + "_open")
+                    : this.findViewWithTag("box_" + (viewIndex + 1) + "_close");
 
             if (parentBelow != null) {
 
-                int height = 5 * baseAdapter.getView(0, null, this).getHeight() / 8;
+                int height = 5 * v.getHeight() / 8;
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
                 switch (status) {

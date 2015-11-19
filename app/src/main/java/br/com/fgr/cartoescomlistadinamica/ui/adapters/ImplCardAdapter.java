@@ -5,9 +5,11 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
+import br.com.fgr.cartoescomlistadinamica.R;
 import br.com.fgr.cartoescomlistadinamica.model.AbstractCard;
 
 public class ImplCardAdapter extends AbstractCardAdapter {
@@ -38,6 +40,11 @@ public class ImplCardAdapter extends AbstractCardAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = super.getView(position, convertView, parent);
+
+        ImageView imageView = (ImageView) v.findViewById(R.id.image);
+        AbstractCard abstractCard = abstractCards.get(position);
+
+        imageView.setBackgroundResource(abstractCard.getBackground());
 
         return v;
 

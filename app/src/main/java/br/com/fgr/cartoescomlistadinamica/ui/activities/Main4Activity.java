@@ -21,12 +21,9 @@ public class Main4Activity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onResume() {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
-
-        ButterKnife.bind(this);
+        super.onResume();
 
         List<AbstractCard> abstractCards = new ArrayList<>();
         abstractCards.add(new AbstractCard() {
@@ -65,6 +62,16 @@ public class Main4Activity extends AppCompatActivity {
             }
 
         });
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main4);
+
+        ButterKnife.bind(this);
 
     }
 
