@@ -30,6 +30,7 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
     private Drawable normalShape;
 
     private SideDraggable draggable;
+    private ActionOnClick actionOnClick;
 
     private List<RelativeLayout> relativeLayouts;
 
@@ -73,6 +74,10 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
     public void setSideDraggable(@NonNull SideDraggable draggable) {
         this.draggable = draggable;
+    }
+
+    public void setActionOnClick(@NonNull ActionOnClick actionOnClick) {
+        this.actionOnClick = actionOnClick;
     }
 
     private void reorderList(int oldPos, int newPos) {
@@ -148,9 +153,13 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
                     case "close":
                         params.topMargin = params.topMargin + height;
+                        if (actionOnClick != null)
+                            actionOnClick.onClose();
                         break;
                     case "open":
                         params.topMargin = params.topMargin - height;
+                        if (actionOnClick != null)
+                            actionOnClick.onOpen();
                         break;
 
                 }
@@ -262,9 +271,15 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
                 if (v.getX() < -500 && !isAppear) {
 
-//                    isAppear = true;
+                    isAppear = true;
 
-                    draggable.draggableToLeft();
+                    if (draggable != null) {
+
+                        draggable.draggableToLeft();
+                        isAppear = false;
+
+                    }
+
 //                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //                    builder.setMessage("Alguma coisa aqui.")
 //                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -282,8 +297,18 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 //
 //                    builder.create().show();
 
-                } else
-                    draggable.draggableToRight();
+                } else {
+
+                    isAppear = true;
+
+                    if (draggable != null) {
+
+                        draggable.draggableToRight();
+                        isAppear = false;
+
+                    }
+
+                }
 
                 return false;
 
@@ -322,6 +347,14 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
         void draggableToLeft();
 
         void draggableToRight();
+
+    }
+
+    public interface ActionOnClick {
+
+        void onOpen();
+
+        void onClose();
 
     }
 

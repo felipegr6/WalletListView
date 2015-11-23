@@ -63,6 +63,20 @@ public class Main4Activity extends AppCompatActivity {
 
         });
 
+        cardListView.setActionOnClick(new CardListView.ActionOnClick() {
+
+            @Override
+            public void onOpen() {
+
+            }
+
+            @Override
+            public void onClose() {
+
+            }
+
+        });
+
     }
 
     @Override
