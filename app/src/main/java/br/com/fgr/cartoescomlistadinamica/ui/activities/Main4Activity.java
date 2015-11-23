@@ -44,6 +44,13 @@ public class Main4Activity extends AppCompatActivity {
 
         });
 
+        abstractCards.add(new AbstractCard() {
+            @Override
+            public int getBackground() {
+                return R.drawable.cartao_tr_linhas;
+            }
+        });
+
         AbstractCardAdapter cardAdapter = new ImplCardAdapter(this, R.layout.layout_example,
                 abstractCards);
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.Collections;
 import java.util.List;
 
 import br.com.fgr.cartoescomlistadinamica.R;
@@ -47,6 +48,21 @@ public class ImplCardAdapter extends AbstractCardAdapter {
         imageView.setBackgroundResource(abstractCard.getBackground());
 
         return v;
+
+    }
+
+    @Override
+    public boolean reorderList(int index1, int index2) {
+
+        if (index1 < abstractCards.size() && index2 < abstractCards.size()) {
+
+            Collections.swap(abstractCards, index1, index2);
+
+            return true;
+
+        }
+
+        return false;
 
     }
 

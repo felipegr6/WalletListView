@@ -82,9 +82,11 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
     private void reorderList(int oldPos, int newPos) {
 
-        RelativeLayout rl = relativeLayouts.remove(oldPos);
+        relativeLayouts.clear();
+        removeAllViews();
 
-        relativeLayouts.add(newPos, rl);
+        baseAdapter.reorderList(oldPos, newPos);
+
         inflateViews();
 
     }
@@ -208,18 +210,20 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
                 int indexFrom = Integer.parseInt(((String) view.getTag()).split("_")[1]);
                 int indexTo = Integer.parseInt(((String) viewTo.getTag()).split("_")[1]);
 
-                ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
+                reorderList(indexFrom, indexTo);
 
-                if (!owner.getTag().equals(container.getTag())) {
-
-                    owner.removeView(view);
-                    container.removeView(viewTo);
-                    owner.addView(viewTo);
-                    container.addView(view);
-
-                }
-
-                view.setVisibility(View.VISIBLE);
+//                ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
+//
+//                if (!owner.getTag().equals(container.getTag())) {
+//
+//                    owner.removeView(view);
+//                    container.removeView(viewTo);
+//                    owner.addView(viewTo);
+//                    container.addView(view);
+//
+//                }
+//
+//                view.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 // Ao terminar de arrastar

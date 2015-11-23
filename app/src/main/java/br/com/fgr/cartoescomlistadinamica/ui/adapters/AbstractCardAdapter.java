@@ -38,4 +38,6 @@ public abstract class AbstractCardAdapter extends BaseAdapter {
 
     }
 
+    public abstract boolean reorderList(int index1, int index2);
+
 }
