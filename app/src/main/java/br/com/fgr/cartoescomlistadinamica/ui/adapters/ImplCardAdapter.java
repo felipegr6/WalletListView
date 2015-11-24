@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.util.Collections;
 import java.util.List;
 
 import br.com.fgr.cartoescomlistadinamica.R;
@@ -56,7 +55,9 @@ public class ImplCardAdapter extends AbstractCardAdapter {
 
         if (index1 < abstractCards.size() && index2 < abstractCards.size()) {
 
-            Collections.swap(abstractCards, index1, index2);
+            AbstractCard abstractCard = abstractCards.remove(index1);
+
+            abstractCards.add(index2, abstractCard);
 
             return true;
 
