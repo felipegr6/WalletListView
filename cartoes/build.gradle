@@ -14,9 +14,15 @@ android {
         versionName "1.0"
     }
     buildTypes {
-        release {
-            minifyEnabled false
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
         }
     }
 }
@@ -60,6 +66,4 @@ dependencies {
     compile "com.android.support:appcompat-v7:$AndroidSupportVersion"
     compile "com.android.support:cardview-v7:$AndroidSupportVersion"
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0'
-    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0'
 }
