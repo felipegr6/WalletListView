@@ -1,5 +1,30 @@
 apply plugin: 'com.android.library'
 
+ext {
+
+    bintrayRepo = 'maven'
+    bintrayName = 'WalletListView'
+
+    publishedGroupId = 'br.com.fgr.walletlistview'
+    libraryName = 'WalletListView'
+    artifact = 'walletlistview'
+
+    libraryDescription = 'A widget (like a ListView) with wallet behaviors.'
+
+    siteUrl = 'https://github.com/felipegr6/CartoesComListaDinamica'
+    gitUrl = 'https://github.com/felipegr6/CartoesComListaDinamica.git'
+
+    libraryVersion = '0.1'
+
+    developerId = 'felipegr6'
+    developerName = 'Felipe Rocha'
+    developerEmail = 'felipegr6@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -25,3 +50,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:$AndroidSupportVersion"
 }
+
+
+apply from: rootProject.file('gradle/installv1.gradle')
+apply from: rootProject.file('gradle/bintrayv1.gradle')
