@@ -15,7 +15,7 @@ import br.com.fgr.walletlistview.ui.custom_views.CardListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class Main4Activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.card_list)
     CardListView cardListView;
@@ -32,15 +32,6 @@ public class Main4Activity extends AppCompatActivity {
 
             @Override
             public int getBackground() {
-                return R.drawable.cartao_ta_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
                 return R.drawable.cartao_tcar_linhas;
             }
 
@@ -50,16 +41,7 @@ public class Main4Activity extends AppCompatActivity {
 
             @Override
             public int getBackground() {
-                return R.drawable.cartao_ta_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_tcar_linhas;
+                return R.drawable.cartao_tr_linhas;
             }
 
         });
@@ -69,69 +51,6 @@ public class Main4Activity extends AppCompatActivity {
             @Override
             public int getBackground() {
                 return R.drawable.cartao_ta_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_tcar_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_ta_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_tcar_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_ta_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_tcar_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_ta_linhas;
-            }
-
-        });
-
-        abstractCards.add(new AbstractCard() {
-
-            @Override
-            public int getBackground() {
-                return R.drawable.cartao_tcar_linhas;
             }
 
         });
@@ -175,7 +94,7 @@ public class Main4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
 
