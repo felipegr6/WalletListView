@@ -6,33 +6,30 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.ScrollView;
 
 import br.com.fgr.cartoescomlistadinamica.R;
+import br.com.fgr.cartoescomlistadinamica.model.AbstractCard;
 import br.com.fgr.cartoescomlistadinamica.ui.adapters.AbstractCardAdapter;
 import br.com.fgr.cartoescomlistadinamica.utils.GeneratorId;
 import br.com.fgr.cartoescomlistadinamica.utils.Measure;
 
-public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout implements
+public class CardListView<T extends AbstractCardAdapter> extends ScrollView implements
         View.OnTouchListener, View.OnDragListener, View.OnLongClickListener, View.OnClickListener {
 
     private Context context;
 
+    private RelativeLayout mainLayout;
     private Drawable enterShape;
     private Drawable normalShape;
 
     private SideDraggable draggable;
     private ActionOnClick actionOnClick;
-
-    private List<RelativeLayout> relativeLayouts;
 
     boolean isDraggingInTouch = false;
     float lastXTouch;
@@ -50,6 +47,9 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
         enterShape = getResources().getDrawable(R.drawable.bg_over);
         normalShape = getResources().getDrawable(R.drawable.bg);
+        mainLayout = new RelativeLayout(context);
+
+        this.addView(mainLayout);
 
     }
 
@@ -60,13 +60,15 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
         enterShape = getResources().getDrawable(R.drawable.bg_over);
         normalShape = getResources().getDrawable(R.drawable.bg);
+        mainLayout = new RelativeLayout(context, attrs);
+
+        this.addView(mainLayout);
 
     }
 
     public void setAdapter(@NonNull T baseAdapter) {
 
         this.baseAdapter = baseAdapter;
-        relativeLayouts = new ArrayList<>();
 
         inflateViews();
 
@@ -82,9 +84,7 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
     private void reorderList(int oldPos, int newPos) {
 
-        relativeLayouts.clear();
-        removeAllViews();
-
+        mainLayout.removeAllViews();
         baseAdapter.reorderList(oldPos, newPos);
 
         inflateViews();
@@ -94,8 +94,8 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
     private void inflateViews() {
 
         int size = baseAdapter.getCount();
-        relativeLayouts.clear();
-        removeAllViews();
+
+        mainLayout.removeAllViews();
 
         for (int i = 0; i < size; i++) {
 
@@ -126,8 +126,7 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
             rl.addView(cardView);
             rl.setOnDragListener(this);
-            addView(rl);
-            relativeLayouts.add(rl);
+            mainLayout.addView(rl);
 
         }
 
@@ -156,12 +155,12 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
                     case "close":
                         params.topMargin = params.topMargin + height;
                         if (actionOnClick != null)
-                            actionOnClick.onClose();
+                            actionOnClick.onClose((AbstractCard) baseAdapter.getItem(viewIndex));
                         break;
                     case "open":
                         params.topMargin = params.topMargin - height;
                         if (actionOnClick != null)
-                            actionOnClick.onOpen();
+                            actionOnClick.onOpen((AbstractCard) baseAdapter.getItem(viewIndex));
                         break;
 
                 }
@@ -256,6 +255,7 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
     public boolean onTouch(View v, MotionEvent event) {
 
         int action = event.getAction();
+        int indice = Integer.parseInt(((String) v.getTag()).split("_")[1]);
 
         if (action == MotionEvent.ACTION_DOWN && !isDraggingInTouch) {
 
@@ -271,35 +271,16 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
                 v.setX(v.getX() + event.getX() - deltaXTouch);
                 v.setY(v.getY());
 
-                Log.e("getX", String.valueOf(v.getX()));
-
                 if (v.getX() < -500 && !isAppear) {
 
                     isAppear = true;
 
                     if (draggable != null) {
 
-                        draggable.draggableToLeft();
+                        draggable.draggableToLeft((AbstractCard) baseAdapter.getItem(indice));
                         isAppear = false;
 
                     }
-
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                    builder.setMessage("Alguma coisa aqui.")
-//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    isAppear = false;
-//                                }
-//                            })
-//                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    isAppear = false;
-//                                }
-//                            });
-//
-//                    builder.create().show();
 
                 } else {
 
@@ -307,7 +288,7 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
                     if (draggable != null) {
 
-                        draggable.draggableToRight();
+                        draggable.draggableToRight((AbstractCard) baseAdapter.getItem(indice));
                         isAppear = false;
 
                     }
@@ -348,17 +329,17 @@ public class CardListView<T extends AbstractCardAdapter> extends RelativeLayout 
 
     public interface SideDraggable {
 
-        void draggableToLeft();
+        void draggableToLeft(AbstractCard card);
 
-        void draggableToRight();
+        void draggableToRight(AbstractCard card);
 
     }
 
     public interface ActionOnClick {
 
-        void onOpen();
+        void onOpen(AbstractCard card);
 
-        void onClose();
+        void onClose(AbstractCard card);
 
     }
 

@@ -2,6 +2,7 @@ package br.com.fgr.cartoescomlistadinamica.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,13 +144,13 @@ public class Main4Activity extends AppCompatActivity {
         cardListView.setSideDraggable(new CardListView.SideDraggable() {
 
             @Override
-            public void draggableToLeft() {
-
+            public void draggableToLeft(AbstractCard card) {
+                Log.d("dragLeft", String.valueOf(card.getBackground()));
             }
 
             @Override
-            public void draggableToRight() {
-
+            public void draggableToRight(AbstractCard card) {
+                Log.d("dragRight", String.valueOf(card.getBackground()));
             }
 
         });
@@ -157,12 +158,12 @@ public class Main4Activity extends AppCompatActivity {
         cardListView.setActionOnClick(new CardListView.ActionOnClick() {
 
             @Override
-            public void onOpen() {
+            public void onOpen(AbstractCard card) {
 
             }
 
             @Override
-            public void onClose() {
+            public void onClose(AbstractCard card) {
 
             }
 
