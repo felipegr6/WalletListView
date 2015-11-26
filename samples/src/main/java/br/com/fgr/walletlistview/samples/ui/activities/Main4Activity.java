@@ -1,4 +1,4 @@
-package br.com.fgr.cartoescomlistadinamica.ui.activities;
+package br.com.fgr.walletlistview.samples.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fgr.cartoescomlistadinamica.R;
 import br.com.fgr.walletlistview.model.AbstractCard;
+import br.com.fgr.walletlistview.samples.R;
 import br.com.fgr.walletlistview.ui.adapters.AbstractCardAdapter;
 import br.com.fgr.walletlistview.ui.adapters.ImplCardAdapter;
 import br.com.fgr.walletlistview.ui.custom_views.CardListView;

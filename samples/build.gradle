@@ -7,7 +7,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "br.com.fgr.cartoescomlistadinamica"
+        applicationId "br.com.fgr.walletlistview.samples"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -42,7 +42,7 @@ task findbugs(type: FindBugs, dependsOn: assembleDebug) {
     effort = 'max'
     reportLevel = 'high'
     excludeFilter = new File("${project.rootDir}/config/findbugs-filter.xml")
-    classes = files("${project.rootDir}/app/build/intermediates/classes")
+    classes = files("${project.buildDir}/intermediates/classes")
 
     source 'src'
     include '**/*.java'
