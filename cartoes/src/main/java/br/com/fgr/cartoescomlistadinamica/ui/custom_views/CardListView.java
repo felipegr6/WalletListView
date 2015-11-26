@@ -202,7 +202,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
             case DragEvent.ACTION_DROP:
                 // Ao fazer o drop
                 View view = (View) event.getLocalState();
-                ViewGroup owner = (ViewGroup) view.getParent();
+
                 RelativeLayout container = (RelativeLayout) v;
                 View viewTo = container.getChildAt(0);
 
@@ -211,18 +211,6 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                 reorderList(indexFrom, indexTo);
 
-//                ViewGroup root = (ViewGroup) findViewById(R.id.rl_t);
-//
-//                if (!owner.getTag().equals(container.getTag())) {
-//
-//                    owner.removeView(view);
-//                    container.removeView(viewTo);
-//                    owner.addView(viewTo);
-//                    container.addView(view);
-//
-//                }
-//
-//                view.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 // Ao terminar de arrastar
