@@ -12,11 +12,4 @@ public class Measure {
 
     }
 
-    public static int getPixelsFromSP(Context context, int sp) {
-
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
-                context.getResources().getDisplayMetrics());
-
-    }
-
 }

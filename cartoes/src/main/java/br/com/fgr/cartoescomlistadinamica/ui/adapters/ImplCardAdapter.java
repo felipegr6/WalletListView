@@ -16,9 +16,13 @@ public class ImplCardAdapter extends AbstractCardAdapter {
 
     private List<AbstractCard> abstractCards;
 
-    public ImplCardAdapter(Context context, @LayoutRes int resId, @NonNull List<AbstractCard> abstractCards) {
+    public ImplCardAdapter(Context context, @LayoutRes int resId,
+                           @NonNull List<AbstractCard> abstractCards) {
+
         super(context, resId);
+
         this.abstractCards = abstractCards;
+
     }
 
     @Override
