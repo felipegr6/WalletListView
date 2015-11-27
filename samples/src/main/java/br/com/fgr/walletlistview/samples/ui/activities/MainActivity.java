@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public int getBackground() {
-                return R.drawable.cartao_tcar_linhas;
+                return R.drawable.credit_card1;
             }
 
         });
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public int getBackground() {
-                return R.drawable.cartao_tr_linhas;
+                return R.drawable.credit_card2;
             }
 
         });
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public int getBackground() {
-                return R.drawable.cartao_ta_linhas;
+                return R.drawable.credit_card3;
             }
 
         });
