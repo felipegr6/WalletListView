@@ -2,26 +2,37 @@ package br.com.fgr.walletlistview.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public abstract class AbstractCardAdapter extends BaseAdapter {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public abstract class AbstractCardAdapter<T> extends BaseAdapter {
 
     private Context context;
-    private int resId;
+    private List<Integer> listResId;
+    private List<T> list;
 
-    public AbstractCardAdapter(Context context, @LayoutRes int resId) {
+    public AbstractCardAdapter(Context context, List<T> list, @NonNull @LayoutRes Integer... resId) {
+
         this.context = context;
-        this.resId = resId;
+        this.list = list;
+        this.listResId = new ArrayList<>();
+
+        listResId.addAll(Arrays.asList(resId));
+
     }
 
     @Override
     public abstract int getCount();
 
     @Override
-    public abstract Object getItem(int position);
+    public abstract T getItem(int position);
 
     @Override
     public abstract long getItemId(int position);
@@ -29,8 +40,10 @@ public abstract class AbstractCardAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        int layoutId = listResId.get(getItemViewType(position));
+
         if (convertView == null)
-            convertView = LayoutInflater.from(context).inflate(resId, parent, false);
+            convertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
 
         convertView.setTag(String.format("view_%s", String.valueOf(position)));
 
@@ -38,6 +51,23 @@ public abstract class AbstractCardAdapter extends BaseAdapter {
 
     }
 
-    public abstract boolean reorderList(int index1, int index2);
+    @Override
+    public abstract int getItemViewType(int position);
+
+    public boolean reorderList(int index1, int index2) {
+
+        if (index1 < list.size() && index2 < list.size()) {
+
+            T abstractCard = list.remove(index1);
+
+            list.add(index2, abstractCard);
+
+            return true;
+
+        }
+
+        return false;
+
+    }
 
 }

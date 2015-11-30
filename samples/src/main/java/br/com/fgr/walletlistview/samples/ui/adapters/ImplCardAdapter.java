@@ -1,4 +1,4 @@
-package br.com.fgr.walletlistview.ui.adapters;
+package br.com.fgr.walletlistview.samples.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -11,17 +11,16 @@ import java.util.List;
 
 import br.com.fgr.walletlistview.R;
 import br.com.fgr.walletlistview.model.AbstractCard;
+import br.com.fgr.walletlistview.ui.adapters.AbstractCardAdapter;
 
-public class ImplCardAdapter extends AbstractCardAdapter {
+public class ImplCardAdapter extends AbstractCardAdapter<AbstractCard> {
 
     private List<AbstractCard> abstractCards;
 
-    public ImplCardAdapter(Context context, @LayoutRes int resId,
-                           @NonNull List<AbstractCard> abstractCards) {
+    public ImplCardAdapter(Context context, List<AbstractCard> list, @NonNull @LayoutRes Integer... resId) {
 
-        super(context, resId);
-
-        this.abstractCards = abstractCards;
+        super(context, list, resId);
+        this.abstractCards = list;
 
     }
 
@@ -55,20 +54,8 @@ public class ImplCardAdapter extends AbstractCardAdapter {
     }
 
     @Override
-    public boolean reorderList(int index1, int index2) {
-
-        if (index1 < abstractCards.size() && index2 < abstractCards.size()) {
-
-            AbstractCard abstractCard = abstractCards.remove(index1);
-
-            abstractCards.add(index2, abstractCard);
-
-            return true;
-
-        }
-
-        return false;
-
+    public int getItemViewType(int position) {
+        return 0;
     }
 
 }

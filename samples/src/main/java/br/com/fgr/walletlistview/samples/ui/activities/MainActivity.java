@@ -9,8 +9,8 @@ import java.util.List;
 
 import br.com.fgr.walletlistview.model.AbstractCard;
 import br.com.fgr.walletlistview.samples.R;
+import br.com.fgr.walletlistview.samples.ui.adapters.ImplCardAdapter;
 import br.com.fgr.walletlistview.ui.adapters.AbstractCardAdapter;
-import br.com.fgr.walletlistview.ui.adapters.ImplCardAdapter;
 import br.com.fgr.walletlistview.ui.custom_views.CardListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        AbstractCardAdapter cardAdapter = new ImplCardAdapter(this, R.layout.layout_example,
-                abstractCards);
+        AbstractCardAdapter cardAdapter = new ImplCardAdapter(this, abstractCards,
+                R.layout.layout_example);
 
         cardListView.setAdapter(cardAdapter);
 
