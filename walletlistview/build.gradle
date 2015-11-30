@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/felipegr6/WalletListView'
     gitUrl = 'https://github.com/felipegr6/WalletListView.git'
 
-    libraryVersion = '0.1.2'
+    libraryVersion = '0.1.3'
 
     developerId = 'felipegr6'
     developerName = 'Felipe Rocha'
@@ -49,6 +49,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:$AndroidSupportVersion"
+    compile "com.android.support:support-annotations:$AndroidSupportVersion"
 }
 
 apply from: rootProject.file('gradle/installv1.gradle')
