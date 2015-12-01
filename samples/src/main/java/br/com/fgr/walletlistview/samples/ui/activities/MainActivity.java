@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         cardListView.setAdapter(cardAdapter);
 
-        cardListView.setSideDraggable(new CardListView.SideDraggable() {
+        cardListView.setSideDraggable(new CardListView.SideDraggable<AbstractCard>() {
 
             @Override
             public void draggableToLeft(AbstractCard card) {
@@ -74,16 +74,16 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        cardListView.setActionOnClick(new CardListView.ActionOnClick() {
+        cardListView.setActionOnClick(new CardListView.ActionOnClick<AbstractCard>() {
 
             @Override
             public void onOpen(AbstractCard card) {
-
+                Log.d("onOpen", "onOpen");
             }
 
             @Override
             public void onClose(AbstractCard card) {
-
+                Log.d("onClose", "onClose");
             }
 
         });

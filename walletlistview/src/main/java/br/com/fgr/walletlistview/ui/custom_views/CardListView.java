@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import br.com.fgr.walletlistview.R;
-import br.com.fgr.walletlistview.model.AbstractCard;
 import br.com.fgr.walletlistview.ui.adapters.AbstractCardAdapter;
 import br.com.fgr.walletlistview.utils.GeneratorId;
 import br.com.fgr.walletlistview.utils.Measure;
@@ -155,12 +154,12 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
                     case "close":
                         params.topMargin = params.topMargin + height;
                         if (actionOnClick != null)
-                            actionOnClick.onClose((AbstractCard) baseAdapter.getItem(viewIndex));
+                            actionOnClick.onClose(baseAdapter.getItem(viewIndex));
                         break;
                     case "open":
                         params.topMargin = params.topMargin - height;
                         if (actionOnClick != null)
-                            actionOnClick.onOpen((AbstractCard) baseAdapter.getItem(viewIndex));
+                            actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
                         break;
 
                 }
@@ -265,7 +264,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                     if (draggable != null) {
 
-                        draggable.draggableToLeft((AbstractCard) baseAdapter.getItem(indice));
+                        draggable.draggableToLeft(baseAdapter.getItem(indice));
                         isAppear = false;
 
                     }
@@ -276,7 +275,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                     if (draggable != null) {
 
-                        draggable.draggableToRight((AbstractCard) baseAdapter.getItem(indice));
+                        draggable.draggableToRight(baseAdapter.getItem(indice));
                         isAppear = false;
 
                     }
@@ -315,19 +314,19 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     }
 
-    public interface SideDraggable {
+    public interface SideDraggable<T> {
 
-        void draggableToLeft(AbstractCard card);
+        void draggableToLeft(T card);
 
-        void draggableToRight(AbstractCard card);
+        void draggableToRight(T card);
 
     }
 
-    public interface ActionOnClick {
+    public interface ActionOnClick<T> {
 
-        void onOpen(AbstractCard card);
+        void onOpen(T card);
 
-        void onClose(AbstractCard card);
+        void onClose(T card);
 
     }
 
