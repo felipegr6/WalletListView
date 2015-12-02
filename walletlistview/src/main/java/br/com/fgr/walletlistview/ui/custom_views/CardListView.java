@@ -131,18 +131,20 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onClick(View v) {
 
         String tags[] = ((String) ((View) v.getParent()).getTag()).split("_");
         int viewIndex = Integer.parseInt(tags[1]);
+        int auxIndex = viewIndex;
         String status = tags[2];
 
-        while (viewIndex < baseAdapter.getCount()) {
+        while (auxIndex < baseAdapter.getCount()) {
 
-            View parentBelow = this.findViewWithTag("box_" + (viewIndex + 1) + "_open") != null
-                    ? this.findViewWithTag("box_" + (viewIndex + 1) + "_open")
-                    : this.findViewWithTag("box_" + (viewIndex + 1) + "_close");
+            View parentBelow = this.findViewWithTag("box_" + (auxIndex + 1) + "_open") != null
+                    ? this.findViewWithTag("box_" + (auxIndex + 1) + "_open")
+                    : this.findViewWithTag("box_" + (auxIndex + 1) + "_close");
 
             if (parentBelow != null) {
 
@@ -153,13 +155,9 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                     case "close":
                         params.topMargin = params.topMargin + height;
-                        if (actionOnClick != null)
-                            actionOnClick.onClose(baseAdapter.getItem(viewIndex));
                         break;
                     case "open":
                         params.topMargin = params.topMargin - height;
-                        if (actionOnClick != null)
-                            actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
                         break;
 
                 }
@@ -168,7 +166,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
             }
 
-            viewIndex++;
+            auxIndex++;
 
         }
 
@@ -176,9 +174,14 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
             case "close":
                 ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_open");
+                if (actionOnClick != null)
+                    actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
                 break;
             case "open":
-                ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_close");
+                if (viewIndex != baseAdapter.getCount() - 1)
+                    ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_close");
+                if (actionOnClick != null)
+                    actionOnClick.onClose(baseAdapter.getItem(viewIndex));
                 break;
 
         }

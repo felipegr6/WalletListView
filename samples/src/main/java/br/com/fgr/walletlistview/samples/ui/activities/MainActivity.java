@@ -78,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onOpen(AbstractCard card) {
-                Log.d("onOpen", "onOpen");
+                Log.e("onOpen", "onOpen");
             }
 
             @Override
             public void onClose(AbstractCard card) {
-                Log.d("onClose", "onClose");
+                Log.e("onClose", "onClose");
             }
 
         });
