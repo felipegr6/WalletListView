@@ -4,7 +4,6 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -65,7 +64,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     }
 
-    public void setAdapter(@NonNull T baseAdapter) {
+    public void setAdapter(T baseAdapter) {
 
         this.baseAdapter = baseAdapter;
 
@@ -73,11 +72,11 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     }
 
-    public void setSideDraggable(@NonNull SideDraggable draggable) {
+    public void setSideDraggable(SideDraggable draggable) {
         this.draggable = draggable;
     }
 
-    public void setActionOnClick(@NonNull ActionOnClick actionOnClick) {
+    public void setActionOnClick(ActionOnClick actionOnClick) {
         this.actionOnClick = actionOnClick;
     }
 

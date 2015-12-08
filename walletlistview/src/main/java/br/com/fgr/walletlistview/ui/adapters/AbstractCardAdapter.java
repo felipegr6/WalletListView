@@ -1,8 +1,6 @@
 package br.com.fgr.walletlistview.ui.adapters;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ public abstract class AbstractCardAdapter<T> extends BaseAdapter {
     private List<Integer> listResId;
     private List<T> list;
 
-    public AbstractCardAdapter(Context context, List<T> list, @NonNull @LayoutRes Integer... resId) {
+    public AbstractCardAdapter(Context context, List<T> list, Integer... resId) {
 
         this.context = context;
         this.list = list;
