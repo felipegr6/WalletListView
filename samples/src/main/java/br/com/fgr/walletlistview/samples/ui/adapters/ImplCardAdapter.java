@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import br.com.fgr.walletlistview.R;
+import br.com.fgr.walletlistview.samples.R;
 import br.com.fgr.walletlistview.model.AbstractCard;
 import br.com.fgr.walletlistview.ui.adapters.AbstractCardAdapter;
 

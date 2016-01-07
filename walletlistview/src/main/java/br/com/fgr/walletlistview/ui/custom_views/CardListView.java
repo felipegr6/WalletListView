@@ -2,9 +2,11 @@ package br.com.fgr.walletlistview.ui.custom_views;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +17,6 @@ import android.widget.ScrollView;
 import br.com.fgr.walletlistview.R;
 import br.com.fgr.walletlistview.ui.adapters.AbstractCardAdapter;
 import br.com.fgr.walletlistview.utils.GeneratorId;
-import br.com.fgr.walletlistview.utils.Measure;
 
 public class CardListView<T extends AbstractCardAdapter> extends ScrollView implements
         View.OnTouchListener, View.OnDragListener, View.OnLongClickListener, View.OnClickListener {
@@ -37,6 +38,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
     private T baseAdapter;
 
     private boolean isAppear = false;
+    private int distanceBetweenCards;
 
     public CardListView(Context context) {
 
@@ -55,6 +57,16 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
         super(context, attrs);
         this.context = context;
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CardListView, 0, 0);
+
+        try {
+            distanceBetweenCards =
+                    (int) ta.getDimension(R.styleable.CardListView_distanceBetweenCards, 80.0f);
+            Log.e("distanceBetweebnCards", String.valueOf(distanceBetweenCards));
+        } finally {
+            ta.recycle();
+        }
 
         enterShape = getResources().getDrawable(R.drawable.bg_over);
         normalShape = getResources().getDrawable(R.drawable.bg);
@@ -107,7 +119,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
             else
                 rl.setTag(String.format("box_%s_open", String.valueOf(i)));
 
-            params.topMargin = i * Measure.getPixelsFromDP(context, 80);
+            params.topMargin = i * distanceBetweenCards;
 
             rl.setLayoutParams(params);
 
