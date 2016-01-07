@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/felipegr6/WalletListView'
     gitUrl = 'https://github.com/felipegr6/WalletListView.git'
 
-    libraryVersion = '0.1.6'
+    libraryVersion = '0.1.7'
 
     developerId = 'felipegr6'
     developerName = 'Felipe Rocha'
@@ -32,8 +32,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 7
-        versionName "0.1.6"
+        versionCode 8
+        versionName "0.1.7"
     }
     buildTypes {
         release {
