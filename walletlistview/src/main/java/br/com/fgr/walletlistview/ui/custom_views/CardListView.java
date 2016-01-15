@@ -29,6 +29,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     private SideDraggable draggable;
     private ActionOnClick actionOnClick;
+    private OnReorderList reorderList;
 
     boolean isDraggingInTouch = false;
     float lastXTouch;
@@ -84,6 +85,10 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     }
 
+    public void setReorderList(OnReorderList reorderList) {
+        this.reorderList = reorderList;
+    }
+
     public void setSideDraggable(SideDraggable draggable) {
         this.draggable = draggable;
     }
@@ -96,6 +101,9 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
         mainLayout.removeAllViews();
         baseAdapter.reorderList(oldPos, newPos);
+
+        if(reorderList != null)
+            reorderList.onReorder();
 
         inflateViews();
 
@@ -342,6 +350,10 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
         void onClose(T card);
 
+    }
+
+    public interface OnReorderList {
+        void onReorder();
     }
 
 }
