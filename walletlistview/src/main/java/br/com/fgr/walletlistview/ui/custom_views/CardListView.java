@@ -41,6 +41,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
     private boolean isAppear = false;
     private int distanceBetweenCards;
     private int marginBetweenCards;
+    private boolean closeOnOpenOtherCard;
 
     public CardListView(Context context) {
 
@@ -67,7 +68,9 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
             distanceBetweenCards =
                     (int) ta.getDimension(R.styleable.CardListView_distanceBetweenCards, 80.0f);
             marginBetweenCards =
-                    (int)ta.getDimension(R.styleable.CardListView_marginBetweenCards, 50.0f);
+                    (int) ta.getDimension(R.styleable.CardListView_marginBetweenCards, 50.0f);
+            closeOnOpenOtherCard =
+                    ta.getBoolean(R.styleable.CardListView_closeOnOpenOtherCard, false);
 
             Log.i("distanceBetweenCards", String.valueOf(distanceBetweenCards));
             Log.i("marginBetweenCards", String.valueOf(marginBetweenCards));
@@ -109,7 +112,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         mainLayout.removeAllViews();
         baseAdapter.reorderList(oldPos, newPos);
 
-        if(reorderList != null)
+        if (reorderList != null)
             reorderList.onReorder();
 
         inflateViews();
@@ -165,6 +168,9 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         int viewIndex = Integer.parseInt(tags[1]);
         int auxIndex = viewIndex;
         String status = tags[2];
+
+        if (closeOnOpenOtherCard)
+            inflateViews();
 
         while (auxIndex < baseAdapter.getCount()) {
 

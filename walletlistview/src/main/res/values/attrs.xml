@@ -3,5 +3,6 @@
     <declare-styleable name="CardListView">
         <attr name="distanceBetweenCards" format="dimension" />
         <attr name="marginBetweenCards" format="dimension" />
+        <attr name="closeOnOpenOtherCard" format="boolean" />
     </declare-styleable>
 </resources>
