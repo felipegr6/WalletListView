@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
@@ -42,6 +43,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
     private int distanceBetweenCards;
     private int marginBetweenCards;
     private boolean closeOnOpenOtherCard;
+    private boolean onClickDoNotWork;
 
     public CardListView(Context context) {
 
@@ -51,6 +53,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         enterShape = getResources().getDrawable(R.drawable.bg_over);
         normalShape = getResources().getDrawable(R.drawable.bg);
         mainLayout = new RelativeLayout(context);
+        onClickDoNotWork = false;
 
         this.addView(mainLayout);
 
@@ -82,6 +85,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         enterShape = getResources().getDrawable(R.drawable.bg_over);
         normalShape = getResources().getDrawable(R.drawable.bg);
         mainLayout = new RelativeLayout(context, attrs);
+        onClickDoNotWork = false;
 
         this.addView(mainLayout);
 
@@ -169,53 +173,57 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         int auxIndex = viewIndex;
         String status = tags[2];
 
-        if (closeOnOpenOtherCard)
-            inflateViews();
+        if (!onClickDoNotWork) {
 
-        while (auxIndex < baseAdapter.getCount()) {
+            if (closeOnOpenOtherCard)
+                inflateViews();
 
-            View parentBelow = this.findViewWithTag("box_" + (auxIndex + 1) + "_open") != null
-                    ? this.findViewWithTag("box_" + (auxIndex + 1) + "_open")
-                    : this.findViewWithTag("box_" + (auxIndex + 1) + "_close");
+            while (auxIndex < baseAdapter.getCount()) {
 
-            if (parentBelow != null) {
+                View parentBelow = this.findViewWithTag("box_" + (auxIndex + 1) + "_open") != null
+                        ? this.findViewWithTag("box_" + (auxIndex + 1) + "_open")
+                        : this.findViewWithTag("box_" + (auxIndex + 1) + "_close");
+
+                if (parentBelow != null) {
 
 //                int height = 5 * v.getHeight() / 8;
-                int height = marginBetweenCards;
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
+                    int height = marginBetweenCards;
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
-                switch (status) {
+                    switch (status) {
 
-                    case "close":
-                        params.topMargin = params.topMargin + height;
-                        break;
-                    case "open":
-                        params.topMargin = params.topMargin - height;
-                        break;
+                        case "close":
+                            params.topMargin = params.topMargin + height;
+                            break;
+                        case "open":
+                            params.topMargin = params.topMargin - height;
+                            break;
+
+                    }
+
+                    parentBelow.setLayoutParams(params);
 
                 }
 
-                parentBelow.setLayoutParams(params);
+                auxIndex++;
 
             }
 
-            auxIndex++;
+            switch (status) {
 
-        }
+                case "close":
+                    ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_open");
+                    if (actionOnClick != null)
+                        actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
+                    break;
+                case "open":
+                    if (viewIndex != baseAdapter.getCount() - 1)
+                        ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_close");
+                    if (actionOnClick != null)
+                        actionOnClick.onClose(baseAdapter.getItem(viewIndex));
+                    break;
 
-        switch (status) {
-
-            case "close":
-                ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_open");
-                if (actionOnClick != null)
-                    actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
-                break;
-            case "open":
-                if (viewIndex != baseAdapter.getCount() - 1)
-                    ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_close");
-                if (actionOnClick != null)
-                    actionOnClick.onClose(baseAdapter.getItem(viewIndex));
-                break;
+            }
 
         }
 
@@ -223,6 +231,8 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
+
+        onClickDoNotWork = false;
 
         switch (event.getAction()) {
 
@@ -270,6 +280,8 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         v.startDrag(data, shadowBuilder, v, 0);
         v.setVisibility(View.INVISIBLE);
 
+        onClickDoNotWork = false;
+
         return true;
 
     }
@@ -293,6 +305,11 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                 v.setX(v.getX() + event.getX() - deltaXTouch);
                 v.setY(v.getY());
+
+                Log.e("getX", String.valueOf(v.getX()));
+
+                if (v.getX() >= 5.0f || v.getX() <= -5.0f)
+                    onClickDoNotWork = true;
 
                 if (v.getX() < -500 && !isAppear) {
 
@@ -329,6 +346,13 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
                 v.setX(0);
                 v.setY(0);
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onClickDoNotWork = false;
+                    }
+                }, 500);
+
                 return false;
 
             } else if (action == MotionEvent.ACTION_CANCEL) {
@@ -339,6 +363,13 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                 v.setX(0);
                 v.setY(0);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onClickDoNotWork = false;
+                    }
+                }, 500);
 
                 return false;
 
