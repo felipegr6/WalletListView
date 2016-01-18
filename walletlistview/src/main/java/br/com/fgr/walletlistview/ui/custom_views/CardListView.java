@@ -40,6 +40,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     private boolean isAppear = false;
     private int distanceBetweenCards;
+    private int marginBetweenCards;
 
     public CardListView(Context context) {
 
@@ -62,9 +63,15 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CardListView, 0, 0);
 
         try {
+
             distanceBetweenCards =
                     (int) ta.getDimension(R.styleable.CardListView_distanceBetweenCards, 80.0f);
-            Log.e("distanceBetweebnCards", String.valueOf(distanceBetweenCards));
+            marginBetweenCards =
+                    (int)ta.getDimension(R.styleable.CardListView_marginBetweenCards, 50.0f);
+
+            Log.i("distanceBetweenCards", String.valueOf(distanceBetweenCards));
+            Log.i("marginBetweenCards", String.valueOf(marginBetweenCards));
+
         } finally {
             ta.recycle();
         }
@@ -167,7 +174,8 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
             if (parentBelow != null) {
 
-                int height = 5 * v.getHeight() / 8;
+//                int height = 5 * v.getHeight() / 8;
+                int height = marginBetweenCards;
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
                 switch (status) {

@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="CardListView">
         <attr name="distanceBetweenCards" format="dimension" />
+        <attr name="marginBetweenCards" format="dimension" />
     </declare-styleable>
 </resources>
