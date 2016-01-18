@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,9 +73,6 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
                     (int) ta.getDimension(R.styleable.CardListView_marginBetweenCards, 50.0f);
             closeOnOpenOtherCard =
                     ta.getBoolean(R.styleable.CardListView_closeOnOpenOtherCard, false);
-
-            Log.i("distanceBetweenCards", String.valueOf(distanceBetweenCards));
-            Log.i("marginBetweenCards", String.valueOf(marginBetweenCards));
 
         } finally {
             ta.recycle();
@@ -305,8 +301,6 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
                 v.setX(v.getX() + event.getX() - deltaXTouch);
                 v.setY(v.getY());
-
-                Log.e("getX", String.valueOf(v.getX()));
 
                 if (v.getX() >= 5.0f || v.getX() <= -5.0f)
                     onClickDoNotWork = true;
