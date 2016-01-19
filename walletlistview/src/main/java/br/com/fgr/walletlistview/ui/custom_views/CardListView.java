@@ -164,62 +164,77 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
     @Override
     public void onClick(View v) {
 
+        if (onClickDoNotWork)
+            return;
+
         String tags[] = ((String) ((View) v.getParent()).getTag()).split("_");
         int viewIndex = Integer.parseInt(tags[1]);
         int auxIndex = viewIndex;
-        String status = tags[2];
+        final String status = tags[2];
 
-        if (!onClickDoNotWork) {
+        if (closeOnOpenOtherCard)
+            inflateViews();
 
-            if (closeOnOpenOtherCard)
-                inflateViews();
+        while (auxIndex < baseAdapter.getCount()) {
 
-            while (auxIndex < baseAdapter.getCount()) {
+            View parentBelow = this.findViewWithTag("box_" + (auxIndex + 1) + "_open") != null
+                    ? this.findViewWithTag("box_" + (auxIndex + 1) + "_open")
+                    : this.findViewWithTag("box_" + (auxIndex + 1) + "_close");
 
-                View parentBelow = this.findViewWithTag("box_" + (auxIndex + 1) + "_open") != null
-                        ? this.findViewWithTag("box_" + (auxIndex + 1) + "_open")
-                        : this.findViewWithTag("box_" + (auxIndex + 1) + "_close");
+            if (parentBelow != null) {
 
-                if (parentBelow != null) {
+                int height = marginBetweenCards;
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
 
-//                int height = 5 * v.getHeight() / 8;
-                    int height = marginBetweenCards;
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) parentBelow.getLayoutParams();
+                switch (status) {
 
-                    switch (status) {
-
-                        case "close":
-                            params.topMargin = params.topMargin + height;
-                            break;
-                        case "open":
+                    case "close":
+                        params.topMargin = params.topMargin + height;
+                        break;
+                    case "open":
+                        if (!closeOnOpenOtherCard)
                             params.topMargin = params.topMargin - height;
-                            break;
-
-                    }
-
-                    parentBelow.setLayoutParams(params);
+                        break;
 
                 }
 
-                auxIndex++;
+                parentBelow.setLayoutParams(params);
 
             }
 
-            switch (status) {
+            auxIndex++;
 
-                case "close":
-                    ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_open");
-                    if (actionOnClick != null)
-                        actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
-                    break;
-                case "open":
-                    if (viewIndex != baseAdapter.getCount() - 1)
-                        ((View) v.getParent()).setTag(tags[0] + "_" + tags[1] + "_close");
-                    if (actionOnClick != null)
-                        actionOnClick.onClose(baseAdapter.getItem(viewIndex));
-                    break;
+        }
 
-            }
+        switch (status) {
+
+            case "close":
+
+                View vAuxClose = findViewWithTag(String.format("%s_%s_close", tags[0], tags[1]));
+
+                if (vAuxClose != null)
+                    vAuxClose.setTag(String.format("%s_%s_open", tags[0], tags[1]));
+
+                if (actionOnClick != null)
+                    actionOnClick.onOpen(baseAdapter.getItem(viewIndex));
+
+                break;
+
+            case "open":
+
+                if (viewIndex != baseAdapter.getCount() - 1) {
+
+                    View vAuxOpen = findViewWithTag(String.format("%s_%s_open", tags[0], tags[1]));
+
+                    if (vAuxOpen != null)
+                        vAuxOpen.setTag(String.format("%s_%s_close", tags[0], tags[1]));
+
+                }
+
+                if (actionOnClick != null)
+                    actionOnClick.onClose(baseAdapter.getItem(viewIndex));
+
+                break;
 
         }
 
