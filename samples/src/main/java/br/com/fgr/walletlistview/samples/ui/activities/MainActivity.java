@@ -1,5 +1,6 @@
 package br.com.fgr.walletlistview.samples.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -78,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onOpen(AbstractCard card) {
+
                 Log.e("onOpen", "onOpen");
+
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+
             }
 
             @Override

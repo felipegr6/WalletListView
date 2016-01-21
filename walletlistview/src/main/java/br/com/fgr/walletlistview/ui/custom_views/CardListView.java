@@ -6,6 +6,8 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -54,6 +56,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         mainLayout = new RelativeLayout(context);
         onClickDoNotWork = false;
 
+        mainLayout.setId(R.id.rlInsideSv);
         this.addView(mainLayout);
 
     }
@@ -82,6 +85,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         normalShape = getResources().getDrawable(R.drawable.bg);
         mainLayout = new RelativeLayout(context, attrs);
         onClickDoNotWork = false;
+        mainLayout.setId(R.id.rlInsideSv);
 
         this.addView(mainLayout);
 
@@ -408,6 +412,41 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     public interface OnReorderList {
         void onReorder();
+    }
+
+    static class SavedState extends BaseSavedState {
+
+        int rlViewId;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            this.rlViewId = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+
+            super.writeToParcel(out, flags);
+
+            out.writeInt(this.rlViewId);
+
+        }
+
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 
 }
