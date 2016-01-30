@@ -3,6 +3,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 
 android {
+
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
@@ -24,6 +25,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
         }
+    }
+    dexOptions {
+        incremental true
+    }
+    compileOptions {
+        encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
