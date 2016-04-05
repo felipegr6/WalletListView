@@ -29,7 +29,7 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
     private Drawable enterShape;
     private Drawable normalShape;
 
-    private SideDraggable draggable;
+//    private SideDraggable draggable;
     private ActionOnClick actionOnClick;
     private OnReorderList reorderList;
 
@@ -103,9 +103,9 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
         this.reorderList = reorderList;
     }
 
-    public void setSideDraggable(SideDraggable draggable) {
-        this.draggable = draggable;
-    }
+//    public void setSideDraggable(SideDraggable draggable) {
+//        this.draggable = draggable;
+//    }
 
     public void setActionOnClick(ActionOnClick actionOnClick) {
         this.actionOnClick = actionOnClick;
@@ -316,41 +316,42 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
         } else if (isDraggingInTouch) {
 
-            if (action == MotionEvent.ACTION_MOVE) {
-
-                v.setX(v.getX() + event.getX() - deltaXTouch);
-                v.setY(v.getY());
-
-                if (v.getX() >= 5.0f || v.getX() <= -5.0f)
-                    onClickDoNotWork = true;
-
-                if (v.getX() < -500 && !isAppear) {
-
-                    isAppear = true;
-
-                    if (draggable != null) {
-
-                        draggable.draggableToLeft(baseAdapter.getItem(indice));
-                        isAppear = false;
-
-                    }
-
-                } else {
-
-                    isAppear = true;
-
-                    if (draggable != null) {
-
-                        draggable.draggableToRight(baseAdapter.getItem(indice));
-                        isAppear = false;
-
-                    }
-
-                }
-
-                return false;
-
-            } else if (action == MotionEvent.ACTION_UP) {
+//            if (action == MotionEvent.ACTION_MOVE) {
+//
+//                v.setX(v.getX() + event.getX() - deltaXTouch);
+//                v.setY(v.getY());
+//
+//                if (v.getX() >= 5.0f || v.getX() <= -5.0f)
+//                    onClickDoNotWork = true;
+//
+//                if (v.getX() < -500 && !isAppear) {
+//
+//                    isAppear = true;
+//
+////                    if (draggable != null) {
+////
+////                    //    draggable.draggableToLeft(baseAdapter.getItem(indice));
+////                        isAppear = false;
+////
+////                    }
+//
+//                } else {
+//
+//                    isAppear = true;
+//
+////                    if (draggable != null) {
+////
+////                     //   draggable.draggableToRight(baseAdapter.getItem(indice));
+////                        isAppear = false;
+////
+////                    }
+//
+//                }
+//
+//                return false;
+//
+//            } else
+            if (action == MotionEvent.ACTION_UP) {
 
                 isDraggingInTouch = false;
                 lastXTouch = event.getX();
@@ -394,13 +395,13 @@ public class CardListView<T extends AbstractCardAdapter> extends ScrollView impl
 
     }
 
-    public interface SideDraggable<T> {
-
-        void draggableToLeft(T card);
-
-        void draggableToRight(T card);
-
-    }
+//    public interface SideDraggable<T> {
+//
+//        void draggableToLeft(T card);
+//
+//        void draggableToRight(T card);
+//
+//    }
 
     public interface ActionOnClick<T> {
 

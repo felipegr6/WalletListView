@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/felipegr6/WalletListView'
     gitUrl = 'https://github.com/felipegr6/WalletListView.git'
 
-    libraryVersion = '0.1.11'
+    libraryVersion = '0.1.11-beta'
 
     developerId = 'felipegr6'
     developerName = 'Felipe Rocha'
