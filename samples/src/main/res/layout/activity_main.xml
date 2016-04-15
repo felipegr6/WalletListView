@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.fgr.cartoescomlistadinamica.ui.activities.Main4Activity">
+    tools:context="br.com.fgr.walletlistview.samples.ui.activities.MainActivity">
 
     <br.com.fgr.walletlistview.ui.custom_views.CardListView
         android:id="@+id/card_list"

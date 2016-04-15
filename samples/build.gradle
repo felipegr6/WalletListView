@@ -5,14 +5,14 @@ apply plugin: 'findbugs'
 android {
 
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "br.com.fgr.walletlistview.samples"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 12
-        versionName "0.1.11"
+        versionCode 14
+        versionName "0.1.12-ext"
     }
     buildTypes {
         debug {
@@ -36,7 +36,7 @@ android {
     }
 }
 
-def AndroidSupportVersion = '23.1.1'
+def AndroidSupportVersion = '23.2.1'
 check.dependsOn 'checkstyle', 'findbugs'
 
 task checkstyle(type: Checkstyle) {

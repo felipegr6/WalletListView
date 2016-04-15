@@ -61,20 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         cardListView.setAdapter(cardAdapter);
 
-//        cardListView.setSideDraggable(new CardListView.SideDraggable<AbstractCard>() {
-//
-//            @Override
-//            public void draggableToLeft(AbstractCard card) {
-//                Log.d("dragLeft", String.valueOf(card.getBackground()));
-//            }
-//
-//            @Override
-//            public void draggableToRight(AbstractCard card) {
-//                Log.d("dragRight", String.valueOf(card.getBackground()));
-//            }
-//
-//        });
-
         cardListView.setActionOnClick(new CardListView.ActionOnClick<AbstractCard>() {
 
             @Override
